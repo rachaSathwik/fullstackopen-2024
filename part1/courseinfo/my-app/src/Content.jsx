@@ -1,5 +1,6 @@
 import Part from './Part'
 const Content = props =>{
+    console.log(props);
     return(
         <>
         <Part name = {props.part_a} size = {props.exercises_a}/>
