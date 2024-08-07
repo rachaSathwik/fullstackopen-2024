@@ -1,7 +1,7 @@
 const Part = props =>{
-    console.log(props);
+    console.log(props);// This should log the props object to the console
     return(
-        <p>{props.name} {props.size}</p>
+        <p>{props.p.name} {props.p.exercises}</p>
     )
 }
 export default Part;

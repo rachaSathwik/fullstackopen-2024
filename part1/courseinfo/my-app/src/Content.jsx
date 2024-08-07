@@ -3,9 +3,9 @@ const Content = props =>{
     console.log(props);
     return(
         <>
-        <Part name = {props.part_a} size = {props.exercises_a}/>
-        <Part name = {props.part_b} size = {props.exercises_b}/>
-        <Part name = {props.part_c} size = {props.exercises_c}/>
+        <Part p = {props.parts[0]}/>
+        <Part p = {props.parts[1]}/>
+        <Part p = {props.parts[2]}/>
         </>
     )
 }
