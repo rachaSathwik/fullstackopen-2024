@@ -1,4 +1,12 @@
-const StatisticalLine = ({text,value}) => <p>{text} {value}</p>
+const StatisticalLine = ({text,value}) =>
+    <table>
+        <tbody>
+        <tr>
+            <td>{text}</td>
+            <td>{value}</td>
+        </tr>
+        </tbody>
+    </table>
 
 const Statistics = ({good,bad,neutral}) => {
     const total = good+neutral+bad;
@@ -17,7 +25,7 @@ const Statistics = ({good,bad,neutral}) => {
             <StatisticalLine text={"bad"} value={bad}/>
             <StatisticalLine text={"all"} value={total}/>
             <StatisticalLine text = {"average"} value={(good-bad)/total}/>
-            <p>positive {(good/total)*100} %</p>
+            <StatisticalLine text={"positive"} value={(good/total*100)}/>
         </>
     )
 } 
