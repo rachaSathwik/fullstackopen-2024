@@ -1,3 +1,5 @@
+const StatisticalLine = ({text,value}) => <p>{text} {value}</p>
+
 const Statistics = ({good,bad,neutral}) => {
     const total = good+neutral+bad;
     return (total===0)?
@@ -10,11 +12,11 @@ const Statistics = ({good,bad,neutral}) => {
     (
         <>
             <h3>statistics</h3>
-            <p>good {good}</p>
-            <p>neutral {neutral}</p>
-            <p>bad {bad}</p>
-            <p>all {total}</p>
-            <p>average {(good-bad)/total}</p>
+            <StatisticalLine text={"good"} value={good}/>
+            <StatisticalLine text={"neutral"} value={neutral}/>
+            <StatisticalLine text={"bad"} value={bad}/>
+            <StatisticalLine text={"all"} value={total}/>
+            <StatisticalLine text = {"average"} value={(good-bad)/total}/>
             <p>positive {(good/total)*100} %</p>
         </>
     )
