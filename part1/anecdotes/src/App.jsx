@@ -24,13 +24,32 @@ const App = () => {
     copy[index]+=1;
     setVotes(copy);
   }
+  const mostVoted = () => {
+    let max = 0;
+    let maxIdx = 0;
+    votes.forEach((vote, idx) => {
+      if (vote > max) {
+        max = vote;
+        maxIdx = idx;
+      }
+    });
+    return maxIdx;
+  };
+  
+  let idx = mostVoted();
   return (
     <div>
       <p>{anecdotes[selected]}</p>
       <p>has {votes[selected]}</p>
       <button onClick={()=>raiseVote(selected)}>vote</button>
       <button onClick={generateRandom}>next anecdote</button>
+      <div>
+        <h3>Anecdote with most votes</h3>
+        <p>{anecdotes[idx]}</p>
+        <p>has {votes[idx]} votes</p>
+      </div>
     </div>
+    
   )
 }
 
