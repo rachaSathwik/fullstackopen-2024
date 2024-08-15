@@ -1,6 +1,13 @@
 const Statistics = ({good,bad,neutral}) => {
     const total = good+neutral+bad;
-    return(
+    return (total===0)?
+    (
+        <>
+        <h3>statistics</h3>
+        <p>No feedback given</p>
+        </>
+    ):
+    (
         <>
             <h3>statistics</h3>
             <p>good {good}</p>
