@@ -20,18 +20,26 @@ const Part = ({name,exercises}) =>{
 }
 const Total = ({parts}) => {
     const total = parts.reduce((accumulator,part) => accumulator+=part.exercises, 0);
+    console.log(total);    
     return(
         <strong><p>total of {total} exercises</p></strong>
     )
 }
 
 
-const Course = ({course}) => {
+const Course = ({courses}) => {
     return(
         <div>
-            <Header name = {course.name}/>
-            <Content parts = {course.parts}/>
-            <Total parts = {course.parts}/>
+           {courses.map((course) => {
+            console.log(course.id);
+            return(
+                <div key = {course.id}> {/* The key attribute is used to identify each child component in the array returned by the map method. React uses this key to keep track of the order of the elements in the array and to optimize the re-rendering of the components. */}
+                    <Header name = {course.name}/>
+                    <Content parts = {course.parts}/>
+                    <Total  parts = {course.parts}/>
+                </div>
+            )
+           })}
         </div>
     )
 }
