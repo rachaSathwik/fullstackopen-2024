@@ -1,4 +1,7 @@
 import { useState } from 'react'
+import Filter from './components/Filter';
+import PersonForm from './components/PersonForm';
+import Persons from './components/Persons';
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -10,54 +13,35 @@ const App = () => {
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [filter, setFilter] = useState('');
-  
 
   const handleNewContact = (event) => {
     event.preventDefault();
     if(persons.find(person => person.name===newName)){
-      alert(`${newName} is already in the phonebook`);
-      return;
+        alert(`${newName} is already in the phonebook`);
+        return;
     }
     const newPerson = {
-      name: newName,
-      number: newNumber,
-      id: newName.length,
+        name: newName,
+        number: newNumber,
+        id: newName.length,
     };
     setPersons(persons.concat(newPerson));
     setNewName('');
     setNewNumber('');
-  }
+}
 
-  const filtered = persons.filter(p =>
-    p.name.toLowerCase().includes(filter.toLowerCase())
-  );
-
-  return (
-    <div>
-      <h2>Phonebook</h2>
-      <p>filter with name</p>
-      <input
-        value={filter}
-        onChange={(e) => setFilter(e.target.value)}
-      />
-      
-      <h2>add a New</h2>
-      <form onSubmit={handleNewContact}>
-        <div>
-          name: <input value={newName} onChange={(e) => setNewName(e.target.value)}/><br/>
-          number: <input value={newNumber} onChange={(e) => setNewNumber(e.target.value)}/>
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-      <h2>Numbers</h2>
-      {filtered.map(p => (
-          <p key={p.id}>{p.name} {p.number}</p>
-        ))}
-      
-    </div>
-  )
+return (
+  <div>
+    <h2>Phonebook</h2>
+    <Filter filter={filter} setFilter={setFilter} />
+    <h3>Add a new</h3>
+    <PersonForm 
+      handleNewContact = {handleNewContact} name = {newName} setNewName = {setNewName} number = {newNumber} setNewNumber = {setNewNumber}
+    />
+    <h3>Numbers</h3>
+    <Persons filter = {filter} persons = {persons}/>
+  </div>
+)
 }
 
 export default App
