@@ -24,21 +24,31 @@ const App = () => {
 
   const handleNewContact = (event) => {
     event.preventDefault();
-    if(persons.find(person => person.name===newName)){
-        alert(`${newName} is already in the phonebook`);
-        return;
+    const person = persons.find(person => person.name===newName);
+    if(person){
+      confirm(`${newName} is already added to the phonebook, replace the number with a new one?`) && updateContact(person)
+      return;
+    }else{
+      const newPerson = {
+          name: newName,
+          number: newNumber,
+      };
+      Phonebook
+        .addContact(newPerson)
+        .then(contact => {
+          setPersons(persons.concat(contact));
+          setNewName('');
+          setNewNumber('');
+        })
     }
-    const newPerson = {
-        name: newName,
-        number: newNumber,
-    };
+  }
+  const updateContact = (contact) => {
     Phonebook
-      .addContact(newPerson)
-      .then(contact => {
-        setPersons(persons.concat(contact));
-        setNewName('');
-        setNewNumber('');
-      })
+      .updateContact(contact,newNumber)
+      .then(modifiedContact => {
+            console.log(modifiedContact);
+            setPersons(persons.map(person => person.id===modifiedContact.id?modifiedContact:person))
+          })
   }
 
   const deleteContact = (id) => {
@@ -47,6 +57,7 @@ const App = () => {
       .then(deleted => setPersons(persons.filter(person => person.id!==deleted.id)))
   }
 console.log(persons.length);
+
 return (
   <div>
     <h2>Phonebook</h2>

@@ -12,10 +12,14 @@ const addContact = contact => {
     return promise.then(response => {
         console.log(response);
         return response.data;
-    }
-        
-    )
+    })
 }
+const updateContact = (orgContact,newNumber) => {
+    const modContact = {...orgContact,number:newNumber};
+    const promise = axios.put(`${baseUrl}/${orgContact.id}`,modContact)
+    return promise.then(response => response.data)
+}
+
 const deleteContact = id => {
     const promise = axios.delete(`${baseUrl}/${id}`);
     return promise.then(response => {
@@ -23,4 +27,4 @@ const deleteContact = id => {
         return response.data;
     })
 }
-export default {addContact,getAll,deleteContact};
+export default {addContact,getAll,deleteContact,updateContact};
