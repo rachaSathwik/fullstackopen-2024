@@ -16,4 +16,11 @@ const addContact = contact => {
         
     )
 }
-export default {addContact,getAll};
+const deleteContact = id => {
+    const promise = axios.delete(`${baseUrl}/${id}`);
+    return promise.then(response => {
+        console.log(response);
+        return response.data;
+    })
+}
+export default {addContact,getAll,deleteContact};

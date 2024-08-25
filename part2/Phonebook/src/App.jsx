@@ -41,18 +41,22 @@ const App = () => {
       })
   }
 
-
+  const deleteContact = (id) => {
+    Phonebook
+      .deleteContact(id)
+      .then(deleted => setPersons(persons.filter(person => person.id!==deleted.id)))
+  }
 console.log(persons.length);
 return (
   <div>
     <h2>Phonebook</h2>
-    <Filter filter={filter} setFilter={setFilter} />
+    <Filter filter={filter} setFilter={setFilter}/>
     <h3>Add a new</h3>
     <PersonForm 
       handleNewContact = {handleNewContact} name = {newName} setNewName = {setNewName} number = {newNumber} setNewNumber = {setNewNumber}
     />
     <h3>Numbers</h3>
-    <Persons filter = {filter} persons = {persons}/>
+    <Persons filter = {filter} persons = {persons}  deleteContact= {deleteContact}/>
   </div>
 )
 }
