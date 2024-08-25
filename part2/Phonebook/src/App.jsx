@@ -2,7 +2,7 @@ import { useState,useEffect } from 'react'
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
-import axios from 'axios';
+import Phonebook from './Services/Phonebook'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -11,18 +11,14 @@ const App = () => {
   const [filter, setFilter] = useState('');
 
   useEffect(() => {
-    const handleResolve = (response) => {
-      console.log("Promise Fulfilled");
-        setPersons(response.data);
-    }
     const handleReject = (error) => {
         console.log("Promise Rejected");
         console.log(error);
     }
     console.log("effect");
-    axios
-      .get('http://localhost:3001/persons')
-      .then(handleResolve)
+    Phonebook
+      .getAll()
+      .then(contacts => setPersons(contacts))
       .catch(handleReject)
   },[])
 
@@ -36,15 +32,16 @@ const App = () => {
         name: newName,
         number: newNumber,
     };
-    axios
-      .post('http://localhost:3001/persons',newPerson)
-      .then(response => {
-        console.log(response);
-        setPersons(persons.concat(response.data));
+    Phonebook
+      .addContact(newPerson)
+      .then(contact => {
+        setPersons(persons.concat(contact));
         setNewName('');
         setNewNumber('');
       })
-}
+  }
+
+
 console.log(persons.length);
 return (
   <div>
