@@ -3,13 +3,15 @@ import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
 import Phonebook from './Services/Phonebook'
+import Notification from './components/Notification';
 
 const App = () => {
   const [persons, setPersons] = useState([])
-  const [newName, setNewName] = useState('');
-  const [newNumber, setNewNumber] = useState('');
+  const [newPerson, setNewPerson] = useState({name:'',number:''});
   const [filter, setFilter] = useState('');
-
+  const [notify, setNotify] = useState(null);
+  const [task, setTask] = useState('');
+  
   useEffect(() => {
     const handleReject = (error) => {
         console.log("Promise Rejected");
@@ -24,31 +26,42 @@ const App = () => {
 
   const handleNewContact = (event) => {
     event.preventDefault();
-    const person = persons.find(person => person.name===newName);
+    const person = persons.find(person => person.name===newPerson.name);
     if(person){
-      confirm(`${newName} is already added to the phonebook, replace the number with a new one?`) && updateContact(person)
+      confirm(`${newPerson.name} is already added to the phonebook, replace the number with a new one?`) && updateContact(person)
       return;
     }else{
-      const newPerson = {
-          name: newName,
-          number: newNumber,
+      const newContact = {
+          name: newPerson.name,
+          number: newPerson.number,
       };
       Phonebook
-        .addContact(newPerson)
+        .addContact(newContact)
         .then(contact => {
           setPersons(persons.concat(contact));
-          setNewName('');
-          setNewNumber('');
+          setNotify(contact.name);
+          setTask('create');
+          setTimeout(() => {
+            setNotify(null);
+          }, 5000);
+        },(error) => {
+          console.log(error.response.data.error);
         })
     }
+   setNewPerson({name:'',number:''});
   }
   const updateContact = (contact) => {
     Phonebook
-      .updateContact(contact,newNumber)
+      .updateContact(contact,newPerson.number)
       .then(modifiedContact => {
             console.log(modifiedContact);
+            setNotify(modifiedContact.name);
+            setTask('update');
+            setTimeout(() => setNotify(null)
+            ,5000);
             setPersons(persons.map(person => person.id===modifiedContact.id?modifiedContact:person))
           })
+    setNewPerson({name:'',number:''});
   }
 
   const deleteContact = (id) => {
@@ -61,10 +74,13 @@ console.log(persons.length);
 return (
   <div>
     <h2>Phonebook</h2>
+    <Notification user = {notify} task = {task}/>
     <Filter filter={filter} setFilter={setFilter}/>
     <h3>Add a new</h3>
     <PersonForm 
-      handleNewContact = {handleNewContact} name = {newName} setNewName = {setNewName} number = {newNumber} setNewNumber = {setNewNumber}
+      handleNewContact = {handleNewContact}
+      newPerson = {newPerson}
+      setNewPerson = {setNewPerson}
     />
     <h3>Numbers</h3>
     <Persons filter = {filter} persons = {persons}  deleteContact= {deleteContact}/>
