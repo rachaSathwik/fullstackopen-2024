@@ -61,6 +61,14 @@ const App = () => {
             ,5000);
             setPersons(persons.map(person => person.id===modifiedContact.id?modifiedContact:person))
           })
+      .catch(error => {
+        console.log(error.response.data.error);
+        setTask('Error');
+        setNotify(newPerson.name);
+        setTimeout(()=>{
+          setNotify(null);
+        },5000);
+      })
     setNewPerson({name:'',number:''});
   }
 
@@ -68,6 +76,14 @@ const App = () => {
     Phonebook
       .deleteContact(id)
       .then(deleted => setPersons(persons.filter(person => person.id!==deleted.id)))
+      .catch(error => {
+        console.log(error.response.data.error);
+        setTask('Error');
+        setNotify(newPerson.name);
+        setTimeout(() => {
+          setNotify(null);
+        },5000);
+      })
   }
 console.log(persons.length);
 
