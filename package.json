@@ -1,1 +1,1 @@
-{ "dependencies": { "axios": "^1.7.5" } }
+{"dependencies":{"axios":"^1.7.5","create-vite":"^5.5.2"}}
