@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Country from './components/Country';
+
 const App = () => {
   const [country, setCountry] = useState('');
   const [results, setResults] = useState([]);
@@ -29,7 +30,7 @@ const App = () => {
   const handleChange = (event) => {
     setCountry(event.target.value);
   }
- if(!results)return;
+
   return (
     <div>
       find countries:
@@ -41,10 +42,10 @@ const App = () => {
       ) : (
         <div>
           {filteredCountries.map(c => (
-            <>
+            <div key={c.name.common}>
               <p>{c.name.common}</p>
               <button onClick={() => {setFilteredCountries([c])}}>show</button>
-            </>
+            </div>
           ))}
           <br />
         </div>

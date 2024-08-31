@@ -1,7 +1,10 @@
+import Weather from "./Weather";
 const Country = ({ country }) => {
   const flagStyle = {
     width: 'auto',
     height: 100,
+    borderStyle: 'solid',
+    borderColor: 'black',
   };
 
   return (
@@ -17,6 +20,7 @@ const Country = ({ country }) => {
         ))}
       </ul>
       <img style={flagStyle} src={country.flags.png} alt={country.name.common} />
+      <Weather state = {country.capital}/>
     </div>
   );
 };
