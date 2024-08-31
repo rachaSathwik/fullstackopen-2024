@@ -8,13 +8,14 @@ const App = () => {
   const baseUrl = 'https://studies.cs.helsinki.fi/restcountries/api/all';
 
   useEffect(() => {
-    console.log('fetching countries');
+    console.log(`fetching countries ${results.length}`);
     axios.get(baseUrl)
       .then(response => {
         console.log(response.data);
         setResults(response.data);
       });
-  }, []);
+    }, []);
+    console.log(`fetched countries ${results.length}`);
 
   useEffect(() => {
     const filtered = results.filter(c =>
@@ -22,13 +23,13 @@ const App = () => {
     );
     setFilteredCountries(filtered);
     console.log(filtered.length);
-  },[country,results])
+  },[country])
 
 
   const handleChange = (event) => {
     setCountry(event.target.value);
   }
-
+ if(!results)return;
   return (
     <div>
       find countries:
@@ -39,7 +40,12 @@ const App = () => {
         <Country country={filteredCountries[0]} />
       ) : (
         <div>
-          {filteredCountries.map(c => <p>{c.name.common}</p>)}
+          {filteredCountries.map(c => (
+            <>
+              <p>{c.name.common}</p>
+              <button onClick={() => {setFilteredCountries([c])}}>show</button>
+            </>
+          ))}
           <br />
         </div>
       )}

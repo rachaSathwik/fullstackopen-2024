@@ -1,6 +1,6 @@
 const Country = ({ country }) => {
   const flagStyle = {
-    width: 100,
+    width: 'auto',
     height: 100,
   };
 
