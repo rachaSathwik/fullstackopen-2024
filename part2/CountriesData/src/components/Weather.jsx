@@ -5,6 +5,7 @@ const apiKey = import.meta.env.VITE_REACT_APP_WEATHER_KEY;
 
 const Weather = ({state}) => {
     const [weather,setWeather] = useState(null);
+    //fetches weather data from the api
     useEffect(() => {
         axios
             .get(`${baseUrl}?q=${state}&&appid=${apiKey}`)
@@ -14,6 +15,7 @@ const Weather = ({state}) => {
             })
             .catch(e => console.log(e));
     },[])
+    //if weather is not loaded yet, return null
     if(!weather)return;
     return(
             <div key = {weather.id}>

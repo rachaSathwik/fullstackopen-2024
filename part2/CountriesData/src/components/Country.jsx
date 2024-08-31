@@ -15,6 +15,7 @@ const Country = ({ country }) => {
       <br />
       <p><strong>languages:</strong></p>
       <ul>
+        {/* displays the languages of the country by reading the languages object values */}
         {Object.values(country.languages).map((language) => (
           <li key={language}>{language}</li>
         ))}

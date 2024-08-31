@@ -8,6 +8,7 @@ const App = () => {
   const [filteredCountries, setFilteredCountries] = useState([]);
   const baseUrl = 'https://studies.cs.helsinki.fi/restcountries/api/all';
 
+  //fetch all countries
   useEffect(() => {
     console.log(`fetching countries ${results.length}`);
     axios.get(baseUrl)
@@ -18,6 +19,7 @@ const App = () => {
     }, []);
     console.log(`fetched countries ${results.length}`);
 
+  //filter counteries based on the country input
   useEffect(() => {
     const filtered = results.filter(c =>
       c.name.common.toLowerCase().includes(country.toLowerCase())
