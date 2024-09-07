@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+app.use(express.json());
 
 let persons = [
   {
@@ -23,7 +24,7 @@ let persons = [
     number: "39-23-6423122",
   },
 ];
-
+-
 app.get("/api/persons", (request, response) => {
   response.json(persons);
 });
@@ -53,6 +54,24 @@ app.delete('/api/persons/:id',(req,res) => {
     res.status(204).end();
 })
 
+const bigRandomNumber = () => {
+    const randomNumber = Math.floor(Math.random() * 1000000);
+    return new String(randomNumber);
+}
+app.post('/api/persons',(req,res) => {
+    const body = req.body;
+    if(!body.number || !body.name){
+        return res.status(404).json({"error":"body missing"});
+    }
+    const person = {
+        id : bigRandomNumber(),
+        name: body.name,
+        number: body.number 
+    }
+    persons = persons.concat(person);
+    console.log(person);
+    res.json(person);
+})
 const PORT = 3001;
 app.listen(PORT, () => {
   console.log(`server running on port ${PORT}`);
