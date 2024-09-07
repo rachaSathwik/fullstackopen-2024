@@ -60,8 +60,14 @@ const bigRandomNumber = () => {
 }
 app.post('/api/persons',(req,res) => {
     const body = req.body;
-    if(!body.number || !body.name){
+    const name = body.name;
+    const number = body.number;
+    if(!number || !name){
         return res.status(404).json({"error":"body missing"});
+    }
+
+    if(persons.find(person => person.name===name)){
+        return res.status(404).json({ error: 'name must be unique' });
     }
     const person = {
         id : bigRandomNumber(),
